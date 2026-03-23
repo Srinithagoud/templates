@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Online Exam</title>
+
+<script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+
+<style>
+body{
+font-family:Arial;
+text-align:center;
+background:#f4f6f9;
+}
+
+/* camera */
+#video{
+position:fixed;
+top:20px;
+right:20px;
+width:260px;
+height:200px;
+border:3px solid black;
+border-radius:10px;
+}
+
+/* timer */
+#timer{
+font-size:22px;
+color:green;
+}
+
+/* questions */
+.question{
+display:none;
+font-size:22px;
+margin-top:30px;
+width:600px;
+margin-left:auto;
+margin-right:auto;
+text-align:left;
+}
+
+#q1{
+display:block;
+}
+
+.options{
+display:flex;
+flex-direction:column;
+align-items:flex-start;
+margin-left:40%;
+margin-top:15px;
+}
+
+label{
+display:block;
+margin:8px 0;
+width:300px;
+}
+
+button{
+background:#1a73e8;
+color:white;
+border:none;
+padding:10px 20px;
+border-radius:5px;
+cursor:pointer;
+margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Online Exam</h2>
+
+<video id="video" autoplay playsinline></video>
+
+<h3>Time Remaining: <span id="timer">15:00</span></h3>
+
+<form id="examForm">
+
+<!-- Question 1 -->
+<div class="question" id="q1">
+<p>1. The SI unit of work is:</p>
+<label><input type="radio" name="q1"> Joule</label><br>
+<label><input type="radio" name="q1"> Newton</label><br>
+<label><input type="radio" name="q1"> Watt</label><br>
+<label><input type="radio" name="q1"> Pascal</label><br>
+<button type="button" onclick="nextQuestion(1)">Next</button>
+</div>
+
+<!-- Question 2 -->
+<div class="question" id="q2">
+<p>2. If velocity doubles, KE becomes:</p>
+<label><input type="radio" name="q2"> Same</label><br>
+<label><input type="radio" name="q2"> Double</label><br>
+<label><input type="radio" name="q2"> Four times</label><br>
+<label><input type="radio" name="q2"> Half</label><br>
+<button onclick="prevQuestion(2)" type="button">Previous</button>
+<button onclick="nextQuestion(2)" type="button">Next</button>
+</div>
+
+<!-- Question 3 -->
+<div class="question" id="q3">
+<p>3. Acceleration due to gravity:</p>
+<label><input type="radio" name="q3"> 9.8 m/s²</label><br>
+<label><input type="radio" name="q3"> 10.8 m/s²</label><br>
+<label><input type="radio" name="q3"> 8.9 m/s²</label><br>
+<label><input type="radio" name="q3"> 11 m/s²</label><br>
+<button onclick="prevQuestion(3)" type="button">Previous</button>
+<button onclick="nextQuestion(3)" type="button">Next</button>
+</div>
+<!-- Question 4 -->
+<div class="question" id="q4">
+
+<p>4. The unit of electric current is:</p>
+
+<label><input type="radio" name="q4"> Volt</label><br>
+<label><input type="radio" name="q4"> Ampere</label><br>
+<label><input type="radio" name="q4"> Ohm</label><br>
+<label><input type="radio" name="q4"> Watt</label><br>
+
+<button type="button" onclick="prevQuestion(4)">Previous</button>
+<button type="button" onclick="nextQuestion(4)">Next</button>
+
+</div>
+
+
+<!-- Question 5 -->
+<div class="question" id="q5">
+
+<p>5. Which law states V = IR?</p>
+
+<label><input type="radio" name="q5"> Ohm’s Law</label><br>
+<label><input type="radio" name="q5"> Newton’s Law</label><br>
+<label><input type="radio" name="q5"> Faraday’s Law</label><br>
+<label><input type="radio" name="q5"> Hooke’s Law</label><br>
+
+<button type="button" onclick="prevQuestion(5)">Previous</button>
+<button type="button" onclick="nextQuestion(5)">Next</button>
+
+</div>
+
+
+<!-- Question 6 -->
+<div class="question" id="q6">
+
+<p>6. Atomic number represents:</p>
+
+<label><input type="radio" name="q6"> Number of neutrons</label><br>
+<label><input type="radio" name="q6"> Number of protons</label><br>
+<label><input type="radio" name="q6"> Number of electrons only</label><br>
+<label><input type="radio" name="q6"> Mass number</label><br>
+
+<button type="button" onclick="prevQuestion(6)">Previous</button>
+<button type="button" onclick="nextQuestion(6)">Next</button>
+
+</div>
+
+
+<!-- Question 7 -->
+<div class="question" id="q7">
+
+<p>7. The pH of pure water is:</p>
+
+<label><input type="radio" name="q7"> 5</label><br>
+<label><input type="radio" name="q7"> 6</label><br>
+<label><input type="radio" name="q7"> 7</label><br>
+<label><input type="radio" name="q7"> 8</label><br>
+
+<button type="button" onclick="prevQuestion(7)">Previous</button>
+<button type="button" onclick="nextQuestion(7)">Next</button>
+
+</div>
+
+
+<!-- Question 8 -->
+<div class="question" id="q8">
+
+<p>8. Which gas is used in photosynthesis?</p>
+
+<label><input type="radio" name="q8"> Oxygen</label><br>
+<label><input type="radio" name="q8"> Carbon dioxide</label><br>
+<label><input type="radio" name="q8"> Hydrogen</label><br>
+<label><input type="radio" name="q8"> Nitrogen</label><br>
+
+<button type="button" onclick="prevQuestion(8)">Previous</button>
+<button type="button" onclick="nextQuestion(8)">Next</button>
+
+</div>
+
+
+<!-- Question 9 -->
+<div class="question" id="q9">
+
+<p>9. Sodium chloride is commonly known as:</p>
+
+<label><input type="radio" name="q9"> Baking soda</label><br>
+<label><input type="radio" name="q9"> Table salt</label><br>
+<label><input type="radio" name="q9"> Lime</label><br>
+<label><input type="radio" name="q9"> washing soda</label><br>
+<button type="button" onclick="prevQuestion(9)">Previous</button>
+<button type="button" onclick="nextQuestion(9)">Next</button>
+
+</div>
+
+
+<!-- Question 10 -->
+<div class="question" id="q10">
+
+<p>10. The chemical formula of methane is:</p>
+
+<label><input type="radio" name="q10"> CH₄</label><br>
+<label><input type="radio" name="q10"> CO₂</label><br>
+<label><input type="radio" name="q10"> C₂H₆</label><br>
+<label><input type="radio" name="q10"> NH₃</label><br>
+
+<button type="button" onclick="prevQuestion(10)">Previous</button>
+<button type="button" onclick="nextQuestion(10)">Next</button>
+
+</div>
+
+
+<!-- Question 11 -->
+<div class="question" id="q11">
+
+<p>11. Value of 2² + 3² is:</p>
+
+<label><input type="radio" name="q11"> 10</label><br>
+<label><input type="radio" name="q11"> 12</label><br>
+<label><input type="radio" name="q11"> 13</label><br>
+<label><input type="radio" name="q11"> 15</label><br>
+
+<button type="button" onclick="prevQuestion(11)">Previous</button>
+<button type="button" onclick="nextQuestion(11)">Next</button>
+
+</div>
+
+
+<!-- Question 12 -->
+<div class="question" id="q12">
+
+<p>12. The derivative of x² is:</p>
+
+<label><input type="radio" name="q12"> x</label><br>
+<label><input type="radio" name="q12"> 2x</label><br>
+<label><input type="radio" name="q12"> x²</label><br>
+<label><input type="radio" name="q12"> 3x</label><br>
+
+<button type="button" onclick="prevQuestion(12)">Previous</button>
+<button type="button" onclick="nextQuestion(12)">Next</button>
+
+</div>
+
+
+<!-- Question 13 -->
+<div class="question" id="q13">
+
+<p>13. Value of sin 90° is:</p>
+
+<label><input type="radio" name="q13"> 0</label><br>
+<label><input type="radio" name="q13"> 1</label><br>
+<label><input type="radio" name="q13"> -1</label><br>
+<label><input type="radio" name="q13"> 1/2</label><br>
+
+<button type="button" onclick="prevQuestion(13)">Previous</button>
+<button type="button" onclick="nextQuestion(13)">Next</button>
+
+</div>
+
+
+<!-- Question 14 -->
+<div class="question" id="q14">
+
+<p>14. The solution of equation x + 5 = 10 is:</p>
+
+<label><input type="radio" name="q14"> 3</label><br>
+<label><input type="radio" name="q14"> 4</label><br>
+<label><input type="radio" name="q14"> 5</label><br>
+<label><input type="radio" name="q14"> 6</label><br>
+
+<button type="button" onclick="prevQuestion(14)">Previous</button>
+<button type="button" onclick="nextQuestion(14)">Next</button>
+
+</div>
+<!-- Add remaining questions same as before... -->
+
+<div class="question" id="q15">
+<p>15. Value of π:</p>
+<label><input type="radio" name="q15"> 3.14</label><br>
+<label><input type="radio" name="q15"> 2.14</label><br>
+<label><input type="radio" name="q15"> 4.14</label><br>
+<label><input type="radio" name="q15"> 3.41</label><br>
+<button onclick="prevQuestion(15)" type="button">Previous</button>
+<button type="submit">Submit Exam</button>
+</div>
+
+</form>
+
+<script>
+let isSubmitting = false;
+let warningCount = 0;
+
+// ✅ TEMP SESSION FIX
+if(!localStorage.getItem("currentStudent")){
+    localStorage.setItem("currentStudent","student123");
+}
+
+/* FORM SUBMIT */
+document.getElementById("examForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    isSubmitting = true;
+
+    let id = localStorage.getItem("currentStudent");
+
+    let students = JSON.parse(localStorage.getItem("submittedStudents")) || [];
+
+    if(!students.includes(id)){
+        students.push(id);
+        localStorage.setItem("submittedStudents", JSON.stringify(students));
+    }
+
+    // ✅ STOP CAMERA
+    const stream = video.srcObject;
+    if(stream){
+        stream.getTracks().forEach(track => track.stop());
+    }
+
+    localStorage.removeItem("currentStudent");
+
+    document.body.innerHTML = "<h2>✅ Exam Submitted Successfully</h2>";
+});
+
+
+const video = document.getElementById("video");
+
+async function startCamera(){
+    try{
+        // Request user camera
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "user" }, // front camera
+            audio: false
+        });
+
+        // Attach stream to video element
+        video.srcObject = stream;
+
+        // Wait until video metadata is loaded before playing
+        video.onloadedmetadata = () => {
+            video.play();
+            console.log("✅ Camera working");
+        };
+
+    } catch(err){
+        console.error("❌ Camera error:", err);
+        alert("Camera error: " + err.message);
+        terminateExam("Camera cannot start");
+    }
+}
+
+// Start camera
+startCamera();
+// monitor camera every 2 seconds
+setInterval(() => {
+
+    const tracks = stream.getVideoTracks();
+
+    if(tracks.length === 0){
+        terminateExam("Camera disconnected");
+        return;
+    }
+
+    const track = tracks[0];
+
+    if(track.readyState !== "live" || track.enabled === false){
+        terminateExam("Camera turned OFF");
+    }
+
+},2000);
+/* CAMERA SECTION END */
+
+/* LOAD MODELS */
+async function loadModels(){
+    await faceapi.nets.tinyFaceDetector.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js/models');
+    await faceapi.nets.faceLandmark68Net.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js/models');
+}
+
+/* START DETECTION */
+video.addEventListener("play", async ()=>{
+    await loadModels();
+    detectFace();
+});
+
+/* FACE DETECTION */
+function detectFace(){
+    setInterval(async ()=>{
+        const detections = await faceapi
+        .detectAllFaces(video,new faceapi.TinyFaceDetectorOptions())
+        .withFaceLandmarks();
+
+        if(detections.length === 0){
+            terminateExam("No face detected");
+            return;
+        }
+
+        if(detections.length > 1){
+            terminateExam("Multiple faces detected");
+            return;
+        }
+
+        const nose = detections[0].landmarks.getNose()[3];
+        const width = video.videoWidth;
+
+        if(nose.x < width*0.3 || nose.x > width*0.7){
+            terminateExam("Looking away");
+        }
+
+    },2000);
+}
+
+/* EVENTS */
+document.addEventListener("visibilitychange",function(){
+    if(document.hidden && !isSubmitting){
+        terminateExam("Tab switching detected");
+    }
+});
+
+window.addEventListener("blur",function(){
+    if(!isSubmitting){
+        terminateExam("Window switched");
+    }
+});
+
+video.addEventListener("pause",function(){
+    if(!isSubmitting){
+        terminateExam("Camera turned off");
+    }
+});
+
+/* TERMINATE */
+function terminateExam(reason){
+    if(isSubmitting) return;
+
+    warningCount++;
+
+    if(warningCount < 3){
+        alert("⚠ Warning: " + reason);
+        return;
+    }
+
+    alert("❌ Exam terminated: " + reason);
+    window.location = "/login";
+}
+
+/* TIMER */
+let time = 900;
+
+setInterval(()=>{
+    let m = Math.floor(time/60);
+    let s = time%60;
+
+    document.getElementById("timer").innerHTML =
+    m + ":" + (s<10?"0"+s:s);
+
+    time--;
+
+    if(time < 0){
+        alert("Time Up");
+        document.getElementById("examForm").submit();
+    }
+},1000);
+
+/* NAVIGATION */
+function nextQuestion(n){
+    document.getElementById("q"+n).style.display="none";
+    let next = document.getElementById("q"+(n+1));
+    if(next) next.style.display="block";
+}
+
+function prevQuestion(n){
+    document.getElementById("q"+n).style.display="none";
+    let prev = document.getElementById("q"+(n-1));
+    if(prev) prev.style.display="block";
+}
+</script>
+
+</body>
+</html>
